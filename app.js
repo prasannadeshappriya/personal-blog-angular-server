@@ -22,7 +22,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api', apiRouter);
 
 app.get('*',function (req, res) {
-  res.redirect('https://www.google.lk');
+  res.redirect('https://prasanna.alwaysdata.net');
 });
 
 // catch 404 and forward to error handler
