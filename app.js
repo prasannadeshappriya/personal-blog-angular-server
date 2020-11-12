@@ -3,11 +3,20 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var transporter = require('./config/emailConfig');
-var apiRouter = require('./routes/api')(transporter);
+var transporter = require('./src/util/email.initializer');
 let cors = require('cors');
 var app = express();
+const models = require('./src/database/models');
 app.use(cors());
+
+//Configure Database---------------------------------------------
+models.sequelize.sync().then(function () {
+  console.log("Database is connected");
+});
+//---------------------------------------------------------------
+
+//Token validator
+const passport = require('./src/util/passport');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -19,7 +28,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api', apiRouter);
+//Server routes
+require('./src/routes/index')(transporter, app, passport);
 
 app.get('*',function (req, res) {
   res.redirect('https://prasanna.alwaysdata.net');
