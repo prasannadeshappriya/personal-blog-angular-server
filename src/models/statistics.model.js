@@ -1,4 +1,5 @@
 const models = require('../database/models');
+const { Op } = require('sequelize')
 
 module.exports = {
     getStatisticsCount: async function(){
@@ -10,6 +11,15 @@ module.exports = {
     createStatisticsRecord: async function(clientIp){
         return await models.statistics.create({
             IP: clientIp
+        });
+    },
+    getPreviousDayStats: async function(startDate){
+        return await models.statistics.findAll({
+            where: {
+                createdAt: {
+                    [Op.gte]: startDate
+                }
+              }
         });
     }
 };

@@ -6,12 +6,16 @@ var logger = require('morgan');
 var transporter = require('./src/util/email.initializer');
 let cors = require('cors');
 var app = express();
+var cron = require('node-cron');
 const models = require('./src/database/models');
 app.use(cors());
 
 //Configure Database---------------------------------------------
 models.sequelize.sync().then(function () {
   console.log("Database is connected");
+
+  //Start Crons
+  require('./src/util/crons') (cron, transporter);
 });
 //---------------------------------------------------------------
 
