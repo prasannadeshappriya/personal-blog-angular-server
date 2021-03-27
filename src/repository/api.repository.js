@@ -4,7 +4,7 @@ module.exports = {
         let mailOptions = {
             from: 'prasanna.14rox@gmail.com',
             to: 'prasannadeshappriya@gmail.com',
-            subject: 'Comment From PersonL Blog',
+            subject: 'Comment From Personal Blog',
             html: "<h3>You have a message from website</h3>" + 
                         "<h5>" + data.firstName + " " + data.lastName + "</h5>" +
                         "<h5>Email: " + data.email + "</h5>" +
